@@ -1,12 +1,11 @@
   <template>
     <Banner/>
-    <PopularTopics />
+    <PopularTopicc />
   </template> 
   
   <script setup lang="ts">
-  import Banner from '../../lib/components/blog/banner.vue';
-  import PopularTopics from '../../lib/components/blog/popularTopics.vue';
-
+  import Banner from '../../lib/components/blog/Banners.vue';
+  import PopularTopicc from '../../lib/components/blog/PopularTopicc.vue'
   </script>
   
   <style scoped>

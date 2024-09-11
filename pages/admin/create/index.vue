@@ -50,6 +50,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { createBlog } from '~/api/posts.api';
 import CKEditors from '~/lib/components/ckeditor/CKEditors.vue'
 
 interface FormData {
@@ -91,14 +92,8 @@ const handleTextChange = (field: 'image' | 'thumbnail', event: Event) => {
 };
 
 const handleSubmit =async () => {
-  const response = await fetch('https://66de629ede4426916ee0fc32.mockapi.io/post', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData.value),
-    });
-    if(response.ok){
+  const response = await createBlog(formData.value)
+    if(response){
       alert('Create post success !');
       router.push({ path: `/blog` });
     }else{
