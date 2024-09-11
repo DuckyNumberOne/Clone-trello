@@ -1,0 +1,4 @@
+Viết API(Create, Read) chưa có Update, Deleted)
+Render từ phía server cho trang Blog(thiết lập api render cho phía server)
+Thiết lập Ckeditor và lưu dưới dạng markdown (đã thiết lập CKEditor, markdown) 
+Tối ưu hóa SEO(đang thiết lập)
