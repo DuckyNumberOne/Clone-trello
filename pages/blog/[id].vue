@@ -15,16 +15,13 @@
   <div v-else-if="error">
     <p>Error: {{ error }}</p>
   </div>
-  <div v-else>
-    <p>Loading...</p>
-  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { marked } from 'marked';
 
-interface FormData {
+interface Post {
   id: string;
   title: string;
   date: string;
@@ -38,9 +35,7 @@ interface FormData {
 
 const {params} = useRoute();
 const router = useRouter()
-const data = ref<FormData | null>(null);
 const error = ref<string | null>(null);
-const isLoading = ref<boolean>(false);
 
 const handleUpdateBlog =() =>{
   router.push({ path: `/admin/edit/${params.id}` });
@@ -61,31 +56,31 @@ const handleDeleteBlog = async() =>{
     }
 }
 
-const fetchData = async () => {
-  try {
-    isLoading.value = true;
-    const response = await fetch(`https://66de629ede4426916ee0fc32.mockapi.io/post/${params.id}`, {
+const { data, status, refresh } = await useAsyncData<Post>(
+  'popular-topics',
+  async () => {
+    try {
+      const response = await fetch(`https://66de629ede4426916ee0fc32.mockapi.io/post/${params.id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      return response.json();
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'An unknown error occurred';
+      console.error('Error fetching data:', error.value);
+      throw err; 
     }
-    data.value = await response.json();
-  } catch (err) {
-    error.value = err instanceof Error ? err.message : 'An unknown error occurred';
-    console.error('Error fetching data:', error.value);
-  } finally {
-    isLoading.value = false;
   }
-};
+);
 
-onMounted(fetchData);
 
 const convertedMarkdown = computed(() => {
-  return data.value ? marked(data.value.markdown) : '';
+  return data.value ? marked(data.value.markdown || '') : '';
 });
 </script>
 
