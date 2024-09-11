@@ -44,6 +44,7 @@ const editorConfig = ref({
   // licenseKey: '<YOUR_LICENSE_KEY>',
   // Other configuration options...
 });
+
 watch(data, (newData) => {
   emit("update-mark",newData )
 });
