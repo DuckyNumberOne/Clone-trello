@@ -12,10 +12,11 @@
 // import { SlashCommand } from 'ckeditor5-premium-features';
 // Initialize CKEditor
 import { ref, watch,defineProps ,onMounted, defineEmits} from 'vue';
-import { ClassicEditor, Bold, Essentials, Italic, Mention, Paragraph, Undo, Markdown } from 'ckeditor5';
+import { Bold, Essentials, Italic, Mention, Paragraph, Undo, Markdown,Image, Collection,FontColor,Link,BlockQuote,MediaEmbed,Heading,ImageUpload,CodeBlock,Code,Highlight,RemoveFormat } from 'ckeditor5';
 import 'ckeditor5/ckeditor5.css';
 import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
-const editor = ClassicEditor;
+const { $ckeditor } = useNuxtApp()
+const editor = $ckeditor.classicEditor;
 
 const props = defineProps({
   item: {
@@ -33,16 +34,16 @@ const emit = defineEmits(["update-mark"])
 //   }
 // })
 
-const editorData = ref('<p>Hello from CKEditor 5 in Vue!</p>');
 const editorConfig = ref({
-  plugins: [Bold, Essentials, Italic, Mention, Paragraph, Undo, Markdown],
-  toolbar: [
-  'undo', 'redo', '|',
-  'bold', 'italic', 'link', 'blockQuote', 'numberedList', 'bulletedList', 'insertTable', 'mediaEmbed',
-  '|', 'heading', 'imageUpload', 'codeBlock', 'code', 'highlight', 'removeFormat'
+  plugins: [
+    Bold, Essentials, Italic, Mention, Paragraph, Undo, Markdown, Image, Collection,FontColor,
+    FontColor,Link,BlockQuote,MediaEmbed,Heading,ImageUpload,CodeBlock,Code,Highlight,RemoveFormat
   ],
-  // licenseKey: '<YOUR_LICENSE_KEY>',
-  // Other configuration options...
+  toolbar: [
+    'undo', 'redo', '|',
+    'bold', 'italic', 'link', 'blockQuote', 'numberedList', 'bulletedList', 'insertTable', 'mediaEmbed',
+    '|', 'heading', 'imageUpload', 'codeBlock', 'code', 'highlight', 'removeFormat'
+  ],
 });
 
 watch(data, (newData) => {
